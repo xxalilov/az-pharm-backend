@@ -1,0 +1,54 @@
+<%- include('../includes/head') %>
+
+<div class="wrapper">
+  <%- include('../includes/sidebar') %>
+  <div class="main-panel">
+    <%- include('../includes/navbar') %>
+    <div class="content">
+      <div class="row">
+        <% if(slides.length > 0) { %> <% for(let slide of slides) { %>
+        <div class="col-lg-4">
+          <div class="card card-chart">
+            <div class="card-header d-flex justify-content-between">
+              <h3 class="card-title"><%= slide.title %></h3>
+              <div class="d-flex">
+                <span>
+                  <a href="/admin/edit-teacher/<%= slide._id %>?edit=true"
+                    ><i class="tim-icons icon-pencil text-info"></i
+                  ></a>
+                </span>
+                <span>
+                  <form
+                    class="delete-form"
+                    action="/admin/delete-teacher"
+                    method="POST"
+                  >
+                    <input
+                      type="hidden"
+                      value="<%= slide._id %>"
+                      name="teacherId"
+                    />
+                    <button
+                      class="delete-button tim-icons icon-trash-simple text-danger"
+                      type="submit"
+                    ></button>
+                  </form>
+                </span>
+              </div>
+            </div>
+            <div class="card-body mx-auto">
+              <img src="/<%= slide.image %>" alt="" />
+            </div>
+            <div class="card-footer">
+              <p><%= slide.description %></p>
+            </div>
+          </div>
+        </div>
+        <% } %> <% }else { %>
+        <h1 class="mx-auto">Slides Not Found!</h1>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</div>
+<%- include('../includes/fixed_plugin') %> <%- include('../includes/end') %>

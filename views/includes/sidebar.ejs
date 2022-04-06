@@ -1,0 +1,60 @@
+<div class="sidebar">
+  <!--
+      Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red"
+  -->
+  <div class="sidebar-wrapper">
+    <div class="logo w-100 d-flex justify-content-center">
+      <a href="/" class="simple-text logo-normal">Az Pharm</a>
+    </div>
+    <ul class="nav">
+      <li class="<% if(path === '/admin/dashboard') {%>active<% } %>">
+        <a href="/admin/dashboard">
+          <i class="tim-icons icon-chart-pie-36"></i>
+          <p>Dashboard</p>
+        </a>
+      </li>
+      <li class="<% if(path === '/admin/slides') {%>active<% } %>">
+        <a href="/admin/slides">
+          <i class="tim-icons icon-paper"></i>
+          <p>Slides</p>
+        </a>
+      </li>
+      <li class="<% if(path === '/admin/teachers') {%>active<% } %>">
+        <a href="/admin/teachers">
+          <i class="tim-icons icon-user-run"></i>
+          <p>Teachers</p>
+        </a>
+      </li>
+      <li class="<% if(path === '/admin/feedbacks') {%>active<% } %>">
+        <a href="/admin/feedbacks">
+          <i class="tim-icons icon-book-bookmark"></i>
+          <p>Feedbacks</p>
+        </a>
+      </li>
+      <li class="<% if(path === '/admin/partners') {%>active<% } %>">
+        <a href="/admin/partners">
+          <i class="tim-icons icon-bag-16"></i>
+          <p>Partners</p>
+        </a>
+      </li>
+      <li class="<% if(path === '/admin/enrolls') {%>active<% } %>">
+        <a href="/admin/enrolls">
+          <i class="tim-icons icon-badge"></i>
+          <p>Enrolls</p>
+        </a>
+      </li>
+      <li class="<% if(path === '/admin/contacts') {%>active<% } %>">
+        <a href="/admin/contacts">
+          <i class="tim-icons icon-email-85"></i>
+          <p>Contacts</p>
+        </a>
+      </li>
+      <li class="<% if(path === '/admin/user-profile') {%>active<% } %>">
+        <a href="/admin/admin-profile">
+          <i class="tim-icons icon-single-02"></i>
+          <p>Admin Profile</p>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>

@@ -1,0 +1,238 @@
+html {
+   -webkit-box-sizing: border-box;
+   box-sizing: border-box;
+   scroll-behavior: smooth;
+}
+
+*, *::after, *::before {
+   -webkit-box-sizing: inherit;
+   box-sizing: inherit;
+}
+
+body {
+   background-color: #F5F9FF;
+   font-family: "Ubuntu", Arial, sans-serif;
+   line-height: 1;
+}
+
+h1, h2, h3, p, ul {
+   margin: 0;
+}
+
+ul {
+   padding: 0;
+   list-style-type: none;
+}
+
+a {
+   display: inline-block;
+   text-decoration: none;
+   color: inherit;
+}
+
+img {
+   vertical-align: middle;
+}
+
+.button {
+   display: inline-flex;
+   align-items: center;
+   justify-content: center;
+   height: 57px;
+   padding: 0 40px;
+   background-color: #0550C1;
+   border-radius: 8px;
+   border: none;
+   font-weight: 500;
+   font-size: 18px;
+   line-height: 150%;
+   color: #FFFFFF;
+   cursor: pointer;
+   transition: 0.1s all ease-out;
+
+   &:hover {
+      background-color: lighten(#0550C1, 10);
+   }
+
+   &:focus {
+      box-shadow: 0 0 0 0.25rem rgba(#0550C1, 0.3);
+   }
+}
+
+.input {
+   display: block;
+   width: 100%;
+   height: 50px;
+   padding-left: 18px;
+   padding-right: 18px;
+   background-color: #FFFFFF;
+   border: 1px solid #97A1B8;
+   border-radius: 8px;
+   transition: 0.1s all ease-out;
+   font-weight: 400;
+   font-size: 18px;
+   line-height: 150%;
+   color: #0B1229;
+
+   &::placeholder {
+      color: #BEC4D8;
+   }
+
+   &:focus {
+      outline: none;
+      box-shadow: 0 0 0 0.25rem rgba(#97A1B8, 0.3);
+   }
+
+   &--textarea {
+      min-height: 100px;
+      padding-top: 10px;
+      resize: none;
+   }
+}
+
+.container, .flex-container {
+   max-width: 1230px;
+   margin: 0 auto;
+   padding: 0 15px;
+}
+
+.grid-container {
+   display: grid;
+   grid-template-columns: repeat(2, 1fr);
+   grid-gap: 20px;
+   max-width: 1230px;
+   margin: 0 auto;
+   padding: 0 15px;
+}
+
+.flex-container {
+   display: -webkit-box;
+   display: -ms-flexbox;
+   display: flex;
+   -ms-flex-wrap: wrap;
+   flex-wrap: wrap;
+}
+
+.section {
+   padding-top: 100px;
+   overflow-x: hidden;
+}
+
+.section__heading {
+   margin-bottom: 40px;
+   font-weight: 500;
+   font-size: 35px;
+   line-height: 40px;
+   color: #04154D;
+}
+
+.splide__arrows {
+   display: -webkit-box;
+   display: -ms-flexbox;
+   display: flex;
+   -webkit-box-orient: horizontal;
+   -webkit-box-direction: reverse;
+   -ms-flex-direction: row-reverse;
+   flex-direction: row-reverse;
+}
+
+.splide__arrow {
+   width: 45px;
+   height: 45px;
+   border-radius: 50%;
+   background-position: center;
+   background-size: 10px 19px;
+   background-repeat: no-repeat;
+   background-color: #ffffff;
+   opacity: 1;
+
+   &:hover {
+      background-color: #0550C1;
+   }
+
+   &--prev {
+      left: -22.5px;
+      background-image: url("/img/icons/arrow-left.svg");
+
+      &:hover {
+         background-image: url("/img/icons/arrow-left-white.svg");
+      }
+   }
+
+   &--next {
+      right: -22.5px;
+      background-image: url("/img/icons/arrow-right.svg");
+
+      &:hover {
+         background-image: url("/img/icons/arrow-right-white.svg");
+      }
+   }
+
+   svg {
+      display: none;
+   }
+}
+
+.dark-layer {
+   position: fixed;
+   top: 0;
+   right: 0;
+   bottom: 0;
+   left: 0;
+   z-index: 2;
+   display: -webkit-box;
+   display: -ms-flexbox;
+   display: flex;
+   -webkit-box-pack: center;
+   -ms-flex-pack: center;
+   justify-content: center;
+   background-color: rgba(0, 0, 0, 0.2);
+}
+
+.form__label {
+   display: block;
+   margin-bottom: 24px;
+
+   span {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 400;
+      font-size: 18px;
+      line-height: 150%;
+      color: #2E323D;
+   }
+}
+
+.form__sent {
+   display: flex;
+   align-items: center;
+   padding-top: 20px;
+
+   span {
+      margin-right: 10px;
+      font-weight: 500;
+      font-size: 18px;
+      line-height: 21px;
+      color: #0EBB53;
+   }
+}
+
+.dark-layer {
+   position: fixed;
+   top: 0;
+   right: 0;
+   bottom: 0;
+   left: 0;
+   z-index: 5;
+   display: -webkit-box;
+   display: -ms-flexbox;
+   display: flex;
+   -webkit-box-pack: center;
+   -ms-flex-pack: center;
+   justify-content: center;
+   background-color: rgba(0, 0, 0, 0.2);
+}
+
+.d-none {
+   display: none !important;
+}

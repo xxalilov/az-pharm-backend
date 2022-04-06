@@ -1,0 +1,26 @@
+.site-footer {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  background-color: #ffffff;
+
+  .flex-container {
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.footer__text {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 150%;
+  color: #BCBEC0;
+}
+
+.socials {
+  display: flex;
+  align-items: center;
+}
+
+.socials__item:not(:last-child) {
+  margin-right: 15px;
+}

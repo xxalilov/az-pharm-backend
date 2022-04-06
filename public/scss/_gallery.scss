@@ -1,0 +1,28 @@
+.gallery__left {
+   display: grid;
+   grid-template-columns: repeat(2, 1fr);
+   grid-gap: 20px;
+}
+
+
+.gallery__item {
+   border: 1px solid #97A1B8;
+   border-radius: 8px;
+   overflow: hidden;
+
+   img {
+      width: 100%;
+      object-fit: cover;
+   }
+}
+
+.gallery__right {
+   border: 1px solid #97A1B8;
+   border-radius: 8px;
+   overflow: hidden;
+
+   img {
+      width: 100%;
+      object-fit: cover;
+   }
+}

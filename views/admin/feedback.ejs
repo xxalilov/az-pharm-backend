@@ -1,0 +1,126 @@
+<%- include('../includes/head') %>
+
+<div class="wrapper">
+  <%- include('../includes/sidebar') %>
+  <div class="main-panel">
+    <%- include('../includes/navbar') %>
+    <div class="content">
+      <div class="row">
+        <div class="col-lg-12 col-md-12">
+          <div class="card">
+            <div class="card-header">
+              <h4 class="card-title">Add Feedback</h4>
+            </div>
+            <div class="card-body">
+              <div class="form">
+                <form
+                  action="/admin/<% if(editing){%>edit-feedback<% }else{ %>feedbacks<% } %>"
+                  method="POST"
+                  enctype="multipart/form-data"
+                >
+                  <div class="label" id="label">
+                    <label for="student-image">Student Image</label>
+                    <input
+                      type="file"
+                      name="image"
+                      <% if(!editing){ %>required<% } %>  
+                    />
+                  </div>
+                  <div class="label" id="label">
+                    <label for="student-name">Student Name</label>
+                    <input
+                      type="text"
+                      name="student-name"
+                      value="<% if(editing){ %><%= feedback.name %><% } %>"
+                      required
+                    />
+                  </div>
+                  <div class="label" id="label">
+                    <label for="student-course">Student Course</label>
+                    <input
+                      type="text"
+                      name="student-course"
+                      value="<% if(editing){ %><%= feedback.course %><% } %>"
+                      required
+                    />
+                  </div>
+                  <div class="label" id="label">
+                    <label for="student-description">Student Description</label>
+                    <textarea type="text" name="student-description" required>
+<% if(editing){ %><%= feedback.description %><% } %></textarea
+                    >
+                  </div>
+                  <% if(editing){ %>
+                  <input
+                    type="hidden"
+                    value="<%= feedback._id %>"
+                    name="feedbackId"
+                  />
+                  <% } %>
+                  <button type="submit">
+                    <% if(editing){ %>Update Feedback<% }else{ %>Add Feedback<% }
+                    %>
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <% if(feedbacks.length > 0) { %> <% for(let feedback of feedbacks) { %>
+        <div class="col-lg-4">
+          <div class="card card-chart">
+            <div class="card-header d-flex justify-content-between">
+              <h3 class="card-title"><%= feedback.name %></h3>
+              <div class="d-flex">
+                <span>
+                  <a href="/admin/edit-feedback/<%= feedback._id %>?edit=true"
+                    ><i class="tim-icons icon-pencil text-info"></i
+                  ></a>
+                </span>
+                <span>
+                  <form
+                    class="delete-form"
+                    action="/admin/delete-feedback"
+                    method="POST"
+                  >
+                    <input
+                      type="hidden"
+                      value="<%= feedback._id %>"
+                      name="feedbackId"
+                    />
+                    <button
+                      class="
+                        delete-button
+                        tim-icons
+                        icon-trash-simple
+                        text-danger
+                      "
+                      type="submit"
+                    ></button>
+                  </form>
+                </span>
+              </div>
+            </div>
+            <div class="card-body mx-auto">
+              <img src="/<%= feedback.imageUrl %> " alt="" />
+            </div>
+            <div class="card-footer">
+                <div class="d-flex justify-content-between">
+                    <h5><%= feedback.course %></h4>
+                    <h5><%= `${new Date(feedback.date).getDate()}.${new Date(feedback.date).getMonth()+1}.${new Date(feedback.date).getFullYear()}` %></h5>
+                </div>
+              <p><%= feedback.description %></p>
+            </div>
+          </div>
+        </div>
+        <% } %> <% }else { %>
+        <h1 class="mx-auto">Feedbacks Not Found!</h1>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</div>
+<%- include('../includes/fixed_plugin') %> <%- include('../includes/end') %>

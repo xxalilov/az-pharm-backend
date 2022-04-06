@@ -1,0 +1,32 @@
+<%- include('../includes/head') %>
+
+<div class="wrapper">
+  <div class="main-panel">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 col-md-8 offset-md-2 col-sm-12 mt-5">
+          <div class="card card-chart">
+            <div class="card-header">
+              <h2>Reset Password</h2>
+            </div>
+            <div class="card-body">
+              <% if(errorMessage){ %>
+              <div><%= errorMessage %></div>
+              <% } %>
+              <div class="form">
+                <form action="/admin/reset-password" method="POST">
+                  <div class="label" id="label">
+                    <label for="name">Email</label>
+                    <input type="email" name="email" />
+                  </div>
+                  <button type="submit">Reset</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<%- include('../includes/end') %>

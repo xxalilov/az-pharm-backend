@@ -1,0 +1,136 @@
+<%- include('../includes/head') %>
+  <div class="wrapper">
+    <%- include('../includes/sidebar') %>
+    <div class="main-panel">
+      <%- include('../includes/navbar') %>
+      <div class="content">
+        <div class="row">
+          <div class="col-md-8">
+            <div class="card">
+              <div class="card-header d-flex">
+                <h5 class="title">Edit Profile</h5>
+              </div>
+              <form action="/admin/update-admin" method="POST">
+              <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-5 pr-md-1">
+                      <div class="form-group">
+                        <label>Company (disabled)</label>
+                        <input type="text" class="form-control" disabled="" placeholder="Company" value="FulFil Education">
+                      </div>
+                    </div>
+                    <div class="col-md-3 px-md-1">
+                      <div class="form-group">
+                        <label>Username</label>
+                        <input type="text" name="userName" class="form-control" placeholder="Username" value="<%= admin_data.userName %>">
+                      </div>
+                    </div>
+                    <div class="col-md-4 pl-md-1">
+                      <div class="form-group">
+                        <label for="exampleInputEmail1">Email address</label>
+                        <input type="email" name="email" class="form-control" placeholder="<%= admin_data.email %>">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 pr-md-1">
+                      <div class="form-group">
+                        <label>First Name</label>
+                        <input type="text" name="firstName" class="form-control" placeholder="First Name" value="<%= admin_data.firstName %>">
+                      </div>
+                    </div>
+                    <div class="col-md-6 pl-md-1">
+                      <div class="form-group">
+                        <label>Last Name</label>
+                        <input type="text" name="lastName" class="form-control" placeholder="Last Name" value="<%= admin_data.lastName %>">
+                      </div>
+                    </div>
+                    <div class="col-md-12 pl-md-1">
+                      <div class="form-group">
+                        <label>Profession</label>
+                        <input type="text" name="profession" class="form-control" placeholder="Profession" value="<%= admin_data.profession %>">
+                      </div>
+                    </div>
+                    <% if(errorMessage){ %>
+                      <div class="col-md-12 pl-md-1 mx-auto">
+                        <div class="form-group">
+                          <label><%= errorMessage %> </label>
+                        </div>
+                      </div>
+                    <% } %>   
+                    <div class="col-md-4 pl-md-1">
+                      <div class="form-group">
+                        <label>Current Password</label>
+                        <input type="password" name="currentPassword" class="form-control" placeholder="Current Password">
+                      </div>
+                    </div>
+                    <div class="col-md-4 pl-md-1">
+                      <div class="form-group">
+                        <label>New Password</label>
+                        <input type="password" name="newPassword" class="form-control" value="<%= oldPassword %>" placeholder="New Password" >
+                      </div>
+                    </div>
+                    <div class="col-md-4 pl-md-1">
+                      <div class="form-group">
+                        <label>Confirm New Password</label>
+                        <input type="password" name="confirmNewPassword" class="form-control" placeholder="Confirm New Password">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-8">
+                      <div class="form-group">
+                        <label>About Me</label>
+                        <textarea rows="4" cols="80" name="about" class="form-control" placeholder="Here can be your description"><%= admin_data.about %></textarea>
+                      </div>
+                    </div>
+                  </div>     
+              </div>
+              <div class="card-footer">
+                <button type="submit" class="btn btn-fill btn-primary">Save</button>
+              </div>
+            </form>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card card-user">
+              <div class="card-body">
+                <p class="card-text">
+                  <div class="author">
+                    <div class="block block-one"></div>
+                    <div class="block block-two"></div>
+                    <div class="block block-three"></div>
+                    <div class="block block-four"></div>
+                    <a href="javascript:void(0)">
+                      <h5 class="title"><%= admin_data.firstName %> <%= admin_data.lastName %></h5>
+                    </a>
+                    <p class="description">
+                      <%= admin_data.profession %>
+                    </p>
+                  </div>
+                </p>
+                <div class="card-description">
+                  <%= admin_data.about %> 
+                </div>
+              </div>
+              <div class="card-footer">
+                <div class="button-container">
+                  <button href="javascript:void(0)" class="btn btn-icon btn-round btn-facebook">
+                    <i class="fab fa-facebook"></i>
+                  </button>
+                  <button href="javascript:void(0)" class="btn btn-icon btn-round btn-twitter">
+                    <i class="fab fa-twitter"></i>
+                  </button>
+                  <button href="javascript:void(0)" class="btn btn-icon btn-round btn-google">
+                    <i class="fab fa-google-plus"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <%- include('../includes/fixed_plugin') %>
+  <%- include('../includes/end') %>

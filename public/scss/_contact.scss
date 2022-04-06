@@ -1,0 +1,36 @@
+.contact {
+   .flex-container {
+      position: relative;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap-reverse;
+   }
+}
+
+.contact__right {
+   width: 385px;
+   padding-top: 40px;
+   padding-bottom: 40px;
+
+   .section__heading {
+      margin-bottom: 10px;
+   }
+}
+
+.contact__text {
+   margin-bottom: 25px;
+   font-weight: 400;
+   font-size: 18px;
+   line-height: 140%;
+   color: #5C6373;
+}
+
+.contact__decoration {
+   position: absolute;
+   top: 0;
+   bottom: 0;
+   right: 40%;
+   z-index: -1;
+   display: flex;
+   overflow: hidden;
+}

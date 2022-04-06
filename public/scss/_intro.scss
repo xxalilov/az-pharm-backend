@@ -1,0 +1,50 @@
+.intro {
+   position: relative;
+   padding-top: 84px;
+   padding-bottom: 106px;
+
+   .flex-container {
+      justify-content: space-between;
+      flex-wrap: wrap-reverse;
+   }
+}
+
+.intro__decoration {
+   position: absolute;
+   top: 0;
+   bottom: 0;
+   left: 40%;
+   right: 0;
+   z-index: -1;
+   display: flex;
+   overflow: hidden;
+}
+
+.intro__left {
+   max-width: 454px;
+   padding-right: 70px;
+}
+
+.intro__company {
+   margin-bottom: 10px;
+   font-weight: 300;
+   font-size: 28px;
+   line-height: 32px;
+   color: #5C6373;
+}
+
+.intro__heading {
+   margin-bottom: 10px;
+   font-weight: 500;
+   font-size: 44px;
+   line-height: 51px;
+   color: #04154D;
+}
+
+.intro__text {
+   margin-bottom: 24px;
+   font-weight: 400;
+   font-size: 18px;
+   line-height: 140%;
+   color: #5C6373;
+}

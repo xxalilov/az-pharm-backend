@@ -1,0 +1,321 @@
+@import "mixins";
+
+@include media(1200px) {
+  .site-header {
+    padding-top: 10px;
+    padding-bottom: 8px;
+  }
+
+  .site-logo {
+    margin-right: 15px;
+
+    img {
+      width: 50px;
+    }
+  }
+
+  .phone {
+    margin: 0;
+  }
+
+  .phone__link {
+    svg {
+      width: 18px;
+      margin-right: 5px;
+    }
+
+    span {
+      font-size: 16px;
+    }
+  }
+
+  .site-nav {
+    position: fixed;
+    display: block;
+    width: 250px;
+    max-height: 100%;
+    top: 0;
+    right: 0;
+    z-index: 6;
+    background-color: #ffffff;
+    border-radius: 0 0 0 20px;
+    padding: 30px 20px 30px 30px;
+    overflow: auto;
+    -webkit-transition: 0.5s all ease-out;
+    -o-transition: 0.5s all ease-out;
+    transition: 0.5s all ease-out;
+  }
+
+  .site-nav-close {
+    right: -105%;
+    opacity: 0;
+  }
+
+
+  .hamburger {
+    display: block;
+  }
+
+  .site-nav__ul {
+    display: block;
+  }
+
+  .site-nav__li {
+    margin-bottom: 20px;
+  }
+
+  .site-nav__link {
+    font-size: 16px;
+    line-height: 16px;
+  }
+
+  .intro {
+    padding-top: 35px;
+    padding-bottom: 0;
+  }
+
+  .intro__right {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-bottom: 50px;
+
+    img {
+      width: 235px;
+    }
+  }
+
+  .intro__left {
+    flex-grow: 1;
+    max-width: 100%;
+    padding-right: 0;
+  }
+
+  .intro__decoration {
+    display: none;
+  }
+
+  .intro__company {
+    margin-bottom: 5px;
+    font-size: 24px;
+    line-height: 28px;
+  }
+
+  .intro__heading {
+    font-size: 28px;
+    line-height: 32px;
+  }
+
+  .intro__text {
+    margin-bottom: 20px;
+    font-size: 16px;
+  }
+
+  .form__label {
+    margin-bottom: 20px;
+
+    span {
+      font-size: 16px;
+    }
+  }
+
+  .input {
+    height: 45px;
+    font-size: 16px;
+  }
+
+  .button {
+    height: 48px;
+    font-size: 16px;
+  }
+
+  .section {
+    padding-top: 50px;
+  }
+
+  .splide__arrow {
+    width: 30px;
+    height: 30px;
+    background-size: 6px 12px;
+  }
+
+  .splide__arrow--next {
+    right: -15px;
+  }
+
+  .splide__arrow--prev {
+    left: -15px;
+  }
+
+  .single-slider__layer {
+    padding: 18px;
+    align-items: flex-end;
+
+    .button {
+      height: 38px;
+      padding-left: 25px;
+      padding-right: 25px;
+      font-size: 14px;
+      line-height: 21px;
+    }
+  }
+
+  .single-slider__heading {
+    font-size: 16px;
+    line-height: 135%;
+    margin-bottom: 8px;
+  }
+
+  .single-slider__text {
+    font-size: 12px;
+  }
+
+  .section__heading {
+    margin-bottom: 20px;
+    font-size: 23px;
+    line-height: 26px;
+  }
+
+  .how-we-work__decoration {
+    display: none;
+  }
+
+  .how-we-work__img {
+    position: static;
+    display: block;
+    margin: 0 auto;
+    width: 280px;
+    margin-bottom: 25px;
+  }
+
+  .item__text {
+    font-size: 16px;
+    line-height: 22.4px;
+  }
+
+  .about-us__video {
+    width: 100%;
+    height: 270px;
+    margin-bottom: 25px;
+  }
+
+  .video__play {
+    width: 52px;
+    height: 52px;
+  }
+
+  .video__play svg {
+    width: 14px;
+  }
+
+  .about-us__info {
+    width: 100%;
+    padding: 0 0 4px 0;
+  }
+
+  .about-us__heading {
+    margin-bottom: 10px;
+  }
+
+  .about-us__text {
+    margin-bottom: 25px;
+    font-size: 16px;
+    line-height: 150%;
+  }
+
+  .contact__decoration {
+    display: none;
+  }
+
+  .contact__right {
+    width: 100%;
+    padding-top: 0;
+  }
+
+  .contact__text {
+    font-size: 16px;
+  }
+
+  .form__sent {
+    span {
+      font-size: 16px;
+    }
+  }
+
+  .contact__left {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+
+    img {
+      width: 260px;
+    }
+  }
+
+  .feedback__content {
+    padding: 18px;
+  }
+
+  .feedback__title {
+    margin-bottom: 8px;
+    font-size: 18px;
+    line-height: 21px;
+  }
+
+  .feedback__text {
+    font-size: 16px;
+  }
+
+  .author__name {
+    font-size: 18px;
+  }
+
+  .author__job {
+    font-size: 14px;
+  }
+
+  .feedback {
+    padding-bottom: 40px;
+  }
+
+  .site-footer {
+    .flex-container {
+      justify-content: flex-start;
+    }
+  }
+
+  .footer__socials {
+    margin-left: auto;
+  }
+
+  .footer__text {
+    max-width: 130px;
+    font-size: 10px;
+  }
+}
+
+@include media(700px) {
+  .how-we-work__content {
+    display: block;
+  }
+  .list__item {
+    max-width: 100%;
+    margin-bottom: 20px;
+  }
+  .how-we-work__footer {
+    .button {
+      width: 100%;
+      margin-bottom: 12px;
+    }
+  }
+  .grid-container {
+    grid-template-columns: 1fr;
+    grid-gap: 12px;
+  }
+
+  .gallery__left {
+    grid-gap: 12px;
+  }
+}

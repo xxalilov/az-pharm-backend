@@ -1,0 +1,64 @@
+<%- include('../includes/head') %>
+
+<div class="wrapper">
+  <%- include('../includes/sidebar') %>
+  <div class="main-panel">
+    <%- include('../includes/navbar') %>
+    <div class="content">
+      <div class="row">
+        <% if(enrolls.length > 0) { %> <% for(let enroll of enrolls) { %>
+        <div class="col-lg-4">
+          <div class="card card-chart">
+            <div class="card-header">
+              <div class="d-flex justify-content-between">
+                <span>
+                  <form
+                    class="delete-enroll"
+                    action="/admin/delete-enroll"
+                    method="POST"
+                  >
+                    <input
+                      type="hidden"
+                      value="<%= enroll._id %>"
+                      name="enrollId"
+                    />
+                    <button
+                      class="
+                        delete-button
+                        tim-icons
+                        icon-trash-simple
+                        text-danger
+                      "
+                      type="submit"
+                    ></button>
+                  </form>
+                </span>
+              </div>
+            </div>
+            <div class="card-body mx-auto">
+              <h4>name: <%= enroll.name %></h4>
+              <h4>phone: <%= enroll.phone %></h4>
+              <h4>course: <%= enroll.course %></h4>
+            </div>
+            <div class="card-footer d-flex justify-content-between">
+              <p>
+                <%= `${new Date(enroll.date).getDate()}.${new
+                Date(enroll.date).getMonth()+1}.${new
+                Date(enroll.date).getFullYear()}` %>
+              </p>
+              <p>
+                <%= `${new Date(enroll.date).getHours()}:${new
+                Date(enroll.date).getMinutes()}:${new
+                Date(enroll.date).getSeconds()}` %>
+              </p>
+            </div>
+          </div>
+        </div>
+        <% } %> <% }else { %>
+        <h1 class="mx-auto">Enrolls Not Found!</h1>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</div>
+<%- include('../includes/fixed_plugin') %> <%- include('../includes/end') %>

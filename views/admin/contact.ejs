@@ -1,0 +1,59 @@
+<%- include('../includes/head') %>
+
+<div class="wrapper">
+  <%- include('../includes/sidebar') %>
+  <div class="main-panel">
+    <%- include('../includes/navbar') %>
+    <div class="content">
+      <div class="row">
+        <% if(contacts.length > 0) { %> <% for(let contact of contacts) { %>
+        <div class="col-lg-4">
+          <div class="card card-chart">
+            <div class="card-header">
+              <div class="d-flex justify-content-between">
+                <span>
+                  <form
+                    class="delete-contact"
+                    action="/admin/delete-contact"
+                    method="POST"
+                  >
+                    <input
+                      type="hidden"
+                      value="<%= contact._id %>"
+                      name="contactId"
+                    />
+                    <button
+                      class="delete-button tim-icons icon-trash-simple text-danger"
+                      type="submit"
+                    ></button>
+                  </form>
+                </span>
+              </div>
+            </div>
+            <div class="card-body mx-auto">
+              <h4>name: <%= contact.name %></h4>
+              <h4>phone: <%= contact.phone %></h4>
+              <h4>email: <%= contact.email %></h4>
+            </div>
+            <div class="card-footer d-flex justify-content-between">
+              <p>
+                <%= `${new Date(contact.date).getDate()}.${new
+                Date(contact.date).getMonth()+1}.${new
+                Date(contact.date).getFullYear()}` %>
+              </p>
+              <p>
+                <%= `${new Date(contact.date).getHours()}:${new
+                Date(contact.date).getMinutes()}:${new
+                Date(contact.date).getSeconds()}` %>
+              </p>
+            </div>
+          </div>
+        </div>
+        <% } %> <% }else { %>
+        <h1 class="mx-auto">Contacts Not Found!</h1>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</div>
+<%- include('../includes/fixed_plugin') %> <%- include('../includes/end') %>
