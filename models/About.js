@@ -8,7 +8,10 @@ const aboutSchema = new mongoose.Schema({
   description: {
     type: String,
     default:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+  },
+  video: {
+    type: String,
   },
 });
 

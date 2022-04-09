@@ -26,7 +26,12 @@ exports.protect = asyncHandler(async (req, res, next) => {
     // Verify token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    req.admin = await Admin.findById(decoded.id);
+    const admin = await Admin.findById(decoded.id);
+
+    if (!admin) {
+      return res.redirect("/");
+    }
+    req.admin = admin;
 
     next();
   } catch (err) {

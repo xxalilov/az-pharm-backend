@@ -1,0 +1,37 @@
+.alert-box {
+  position: absolute;
+  color: #fff;
+  width: 55%;
+  /* top: 2%; */
+  left: 50%;
+  transform: translate(-50%);
+  padding: 10px 10px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 18px;
+  top: -20%;
+  transition-duration: 1s;
+}
+
+.alert-fail {
+  background-color: rgb(255, 72, 58);
+}
+
+.alert-succ {
+  background-color: rgb(59, 197, 75);
+}
+
+.alert-remove {
+  background: transparent;
+  color: white;
+  border: none;
+  cursor: pointer;
+  outline: none;
+}
+
+.alert-box.show {
+  top: 2%;
+  transition-duration: 1s;
+}

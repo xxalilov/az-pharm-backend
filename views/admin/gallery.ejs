@@ -6,32 +6,44 @@
     <%- include('../includes/navbar') %>
     <div class="content">
       <div class="row">
-        <% if(contacts.length > 0) { %> <% for(let contact of contacts) { %>
+        <div class="col-12">
+          <% if(gallery && gallery.length ===5){ %>
+          <h2>You can add only 5 images</h2>
+          <% } else{ %>
+          <button class="btn add-image-btn">Add Image</button>
+          <h4 class="mt-2 mb-2">You must add 5 images!</h4>
+          <% } %>
+        </div>
+      </div>
+      <div class="row">
+        <% if(gallery.length > 0) { %> <% for(let image of gallery) { %>
         <div class="col-lg-4">
           <div class="card card-chart">
             <div class="card-header">
               <div class="d-flex justify-content-between">
                 <span>
                   <button
-                    class="btn delete-contact-btn"
-                    value="<%= contact._id %>"
+                    class="btn edit-image"
+                    type="button"
+                    value="<%= image._id %>"
                   >
+                    <i class="tim-icons icon-pencil text-info"></i>
+                  </button>
+                </span>
+                <span>
+                  <button class="btn delete-image" value="<%= image._id %>">
                     <i class="tim-icons icon-trash-simple text-danger"></i>
                   </button>
                 </span>
               </div>
             </div>
             <div class="card-body mx-auto">
-              <h4>name: <%= contact.name %></h4>
-              <h4>phone: <%= contact.phone %></h4>
-            </div>
-            <div class="card-footer">
-              <p><%= contact.message %></p>
+              <img src="/<%= image.image %>" alt="" />
             </div>
           </div>
         </div>
         <% } %> <% }else { %>
-        <h1 class="mx-auto">Contacts Not Found!</h1>
+        <h1 class="mx-auto">Image Not Found!</h1>
         <% } %>
       </div>
     </div>

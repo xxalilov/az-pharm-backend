@@ -65,6 +65,55 @@ exports.logoutAdmin = asyncHandler(async (req, res, next) => {
   });
 });
 
+/**
+ * @desc    GET Admin
+ * @route   GET /admin/me
+ * @access  Private
+ */
+exports.getAdmin = asyncHandler(async (req, res, next) => {
+  res.status(200).render("admin/user", {
+    pageTitle: "Admin",
+    path: "/admin/me",
+    admin_data: req.admin,
+  });
+});
+
+/**
+ * @desc    Update Admin Details
+ * @route   PUT /api/v1/admin/updatedetails
+ * @access  Private
+ */
+exports.updateAdminDetails = asyncHandler(async (req, res, next) => {
+  let admin = await Admin.findByIdAndUpdate(req.admin.id, req.body, {
+    new: true,
+    runValidators: true,
+  });
+
+  res.status(200).json({
+    success: true,
+    data: admin,
+  });
+});
+
+/**
+ * @desc    Update Admin Password
+ * @route   PUT /api/v1/admin/updatepassword
+ * @access  Private
+ */
+exports.updatePassword = asyncHandler(async (req, res, next) => {
+  const admin = await Admin.findById(req.admin.id).select("+password");
+
+  // Check current password
+  if (!(await admin.matchPassword(req.body.currentPassword))) {
+    return next(new ErrorResponse("Password is incorrect", 401));
+  }
+
+  admin.password = req.body.newPassword;
+  await admin.save();
+
+  sendTokenResponse(admin, 200, res);
+});
+
 // Get token from model, create cookie and send response
 const sendTokenResponse = (admin, statusCode, res) => {
   // Create token

@@ -5,6 +5,7 @@
   <div class="main-panel">
     <%- include('../includes/navbar') %>
     <div class="content">
+      <button class="btn add-slide" type="button">Add Slide</button>
       <div class="row">
         <% if(slides.length > 0) { %> <% for(let slide of slides) { %>
         <div class="col-lg-4">
@@ -13,26 +14,18 @@
               <h3 class="card-title"><%= slide.title %></h3>
               <div class="d-flex">
                 <span>
-                  <a href="/admin/edit-teacher/<%= slide._id %>?edit=true"
-                    ><i class="tim-icons icon-pencil text-info"></i
-                  ></a>
+                  <button
+                    class="btn edit-slide"
+                    type="button"
+                    value="<%= slide._id %>"
+                  >
+                    <i class="tim-icons icon-pencil text-info"></i>
+                  </button>
                 </span>
                 <span>
-                  <form
-                    class="delete-form"
-                    action="/admin/delete-teacher"
-                    method="POST"
-                  >
-                    <input
-                      type="hidden"
-                      value="<%= slide._id %>"
-                      name="teacherId"
-                    />
-                    <button
-                      class="delete-button tim-icons icon-trash-simple text-danger"
-                      type="submit"
-                    ></button>
-                  </form>
+                  <button class="btn delete-slide" value="<%= slide._id %>">
+                    <i class="tim-icons icon-trash-simple text-danger"></i>
+                  </button>
                 </span>
               </div>
             </div>

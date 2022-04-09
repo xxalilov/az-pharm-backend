@@ -12,50 +12,21 @@
             <div class="card-header">
               <div class="d-flex justify-content-between">
                 <span>
-                  <form
-                    class="delete-enroll"
-                    action="/admin/delete-enroll"
-                    method="POST"
-                  >
-                    <input
-                      type="hidden"
-                      value="<%= enroll._id %>"
-                      name="enrollId"
-                    />
-                    <button
-                      class="
-                        delete-button
-                        tim-icons
-                        icon-trash-simple
-                        text-danger
-                      "
-                      type="submit"
-                    ></button>
-                  </form>
+                  <button class="btn delete-enroll" value="<%= enroll._id %>">
+                    <i class="tim-icons icon-trash-simple text-danger"></i>
+                  </button>
                 </span>
               </div>
             </div>
             <div class="card-body mx-auto">
               <h4>name: <%= enroll.name %></h4>
               <h4>phone: <%= enroll.phone %></h4>
-              <h4>course: <%= enroll.course %></h4>
-            </div>
-            <div class="card-footer d-flex justify-content-between">
-              <p>
-                <%= `${new Date(enroll.date).getDate()}.${new
-                Date(enroll.date).getMonth()+1}.${new
-                Date(enroll.date).getFullYear()}` %>
-              </p>
-              <p>
-                <%= `${new Date(enroll.date).getHours()}:${new
-                Date(enroll.date).getMinutes()}:${new
-                Date(enroll.date).getSeconds()}` %>
-              </p>
+              <h4>pill: <%= enroll.pillName %></h4>
             </div>
           </div>
         </div>
         <% } %> <% }else { %>
-        <h1 class="mx-auto">Enrolls Not Found!</h1>
+        <h1 class="mx-auto">Enroll Not Found!</h1>
         <% } %>
       </div>
     </div>

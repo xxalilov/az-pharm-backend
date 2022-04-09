@@ -1,4 +1,4 @@
-const modal = document.querySelector(".edit-header-form-inputs");
+const modal = document.querySelector(".modal-body");
 
 export const openModal = (markup) => {
   modal.innerHTML = markup;
@@ -7,8 +7,4 @@ export const openModal = (markup) => {
 
 export const closeModal = () => {
   $("#exampleModal").modal("hide");
-};
-
-export const addContent = (markup) => {
-  console.log(markup);
 };

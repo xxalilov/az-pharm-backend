@@ -1,14 +1,30 @@
 const Home = require("../models/Home");
+const About = require("../models/About");
+const Feedback = require("../models/Feedback");
+const Gallery = require("../models/Gallery");
+const Slide = require("../models/Slide");
 const asyncHandler = require("../middleware/async");
 
 exports.getHome = asyncHandler(async (req, res, next) => {
-  const homeDatas = await Home.findOne();
+  const home = await Home.findOne();
+  const about = await About.find();
+  const feedbacks = await Feedback.find();
+  const gallery = await Gallery.find();
+  const slides = await Slide.find();
 
-  if (!homeDatas) {
+  if (!home) {
     await Home.create({});
   }
 
-  res.status(200).render("index", { title: "Az Pharm" });
+  const homeDatas = {
+    home,
+    about,
+    feedbacks,
+    gallery,
+    slides,
+  };
+
+  res.status(200).render("index", { title: "Az Pharm", data: homeDatas });
 });
 
 /**

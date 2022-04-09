@@ -2163,6 +2163,75 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./public/scripts/_add-enroll.js":
+/*!***************************************!*\
+  !*** ./public/scripts/_add-enroll.js ***!
+  \***************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "addContact": () => (/* binding */ addContact),
+/* harmony export */   "addEnroll": () => (/* binding */ addEnroll)
+/* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _functions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./_functions */ "./public/scripts/_functions.js");
+
+
+
+const addEnroll = async (data, api) => {
+  let message = (0,_functions__WEBPACK_IMPORTED_MODULE_1__.selectOne)(".success-sender");
+  try {
+    const res = await axios__WEBPACK_IMPORTED_MODULE_0___default()({
+      method: "POST",
+      url: api,
+      data,
+    });
+
+    if (res.data.success) {
+      (0,_functions__WEBPACK_IMPORTED_MODULE_1__.selectOne)(".ism").value = "";
+      (0,_functions__WEBPACK_IMPORTED_MODULE_1__.selectOne)(".dori-nomi").value = "";
+      (0,_functions__WEBPACK_IMPORTED_MODULE_1__.selectOne)(".telefon").value = "";
+      message.innerHTML = `
+      <span>Muvaffaqiyatli yuborildi</span>
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="9" cy="9" r="9" fill="white"/>
+          <path d="M4 8L8 12L14 6" stroke="#0EBB53" stroke-width="1.5"/>
+      </svg>
+      `;
+    }
+  } catch (err) {}
+};
+
+const addContact = async (data, api) => {
+  let message = (0,_functions__WEBPACK_IMPORTED_MODULE_1__.selectOne)(".sec-send");
+  try {
+    const res = await axios__WEBPACK_IMPORTED_MODULE_0___default()({
+      method: "POST",
+      url: api,
+      data,
+    });
+
+    if (res.data.success) {
+      (0,_functions__WEBPACK_IMPORTED_MODULE_1__.selectOne)(".contact-name").value = "";
+      (0,_functions__WEBPACK_IMPORTED_MODULE_1__.selectOne)(".contact-phone").value = "";
+      (0,_functions__WEBPACK_IMPORTED_MODULE_1__.selectOne)(".contact-message").value = "";
+      message.innerHTML = `
+        <span>Muvaffaqiyatli yuborildi</span>
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="9" cy="9" r="9" fill="white"/>
+            <path d="M4 8L8 12L14 6" stroke="#0EBB53" stroke-width="1.5"/>
+        </svg>
+        `;
+    }
+  } catch (err) {}
+};
+
+
+/***/ }),
+
 /***/ "./public/scripts/_alerts.js":
 /*!***********************************!*\
   !*** ./public/scripts/_alerts.js ***!
@@ -2178,18 +2247,179 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _functions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./_functions */ "./public/scripts/_functions.js");
 
 
+const alert = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".alert-box");
+const alertMessage = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".alert-message");
+const removeBtn = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".alert-remove");
+
 const hideAlert = () => {
-  const el = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".alert");
-  if (el) el.parentElement.removeChild(el);
+  alert.classList.remove(`show`);
 };
 
-const showAlert = (time) => {
+const showAlert = (text, time, type) => {
   hideAlert();
-  const markup = `<div class="alert alert-danger mt-2" role="alert">
-  Email or password is incorrect!
-</div>`;
-  document.querySelector(".al").insertAdjacentHTML("afterbegin", markup);
+
+  alertMessage.innerText = text;
+  alert.classList.add(`alert-${type}`);
+  alert.classList.add(`show`);
   window.setTimeout(hideAlert, time * 1000);
+};
+
+if (removeBtn) {
+  removeBtn.addEventListener("click", () => {
+    hideAlert();
+  });
+}
+
+
+/***/ }),
+
+/***/ "./public/scripts/_api.js":
+/*!********************************!*\
+  !*** ./public/scripts/_api.js ***!
+  \********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "deleteData": () => (/* binding */ deleteData),
+/* harmony export */   "getDataById": () => (/* binding */ getDataById),
+/* harmony export */   "postData": () => (/* binding */ postData),
+/* harmony export */   "postFormData": () => (/* binding */ postFormData),
+/* harmony export */   "updateData": () => (/* binding */ updateData),
+/* harmony export */   "updateFormData": () => (/* binding */ updateFormData)
+/* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _alerts__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./_alerts */ "./public/scripts/_alerts.js");
+/* harmony import */ var _modal__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./_modal */ "./public/scripts/_modal.js");
+
+
+
+
+const postFormData = async (data, api, reloadPage) => {
+  try {
+    const res = await axios__WEBPACK_IMPORTED_MODULE_0___default()({
+      method: "POST",
+      url: api,
+      data: data,
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    if (res.data.success) {
+      (0,_alerts__WEBPACK_IMPORTED_MODULE_1__.showAlert)("Data created", 10, "succ");
+      (0,_modal__WEBPACK_IMPORTED_MODULE_2__.closeModal)();
+      window.setTimeout(() => {
+        location.assign(reloadPage);
+      }, 1000);
+    }
+  } catch (err) {
+    (0,_alerts__WEBPACK_IMPORTED_MODULE_1__.showAlert)(err.response.data.error, 10, "fail");
+  }
+};
+
+const postData = async (data, api, reloadPage) => {
+  try {
+    const res = await axios__WEBPACK_IMPORTED_MODULE_0___default()({
+      method: "POST",
+      url: api,
+      data: data,
+    });
+
+    if (res.data.success) {
+      (0,_alerts__WEBPACK_IMPORTED_MODULE_1__.showAlert)("Data created", 10, "succ");
+      (0,_modal__WEBPACK_IMPORTED_MODULE_2__.closeModal)();
+      window.setTimeout(() => {
+        location.assign(reloadPage);
+      }, 1000);
+    }
+  } catch (err) {
+    (0,_alerts__WEBPACK_IMPORTED_MODULE_1__.showAlert)(err.response.data.error, 10, "fail");
+  }
+};
+
+const getDataById = async (api, id, cb) => {
+  const url = `${api}/${id}`;
+
+  try {
+    const res = await axios__WEBPACK_IMPORTED_MODULE_0___default()({
+      method: "GET",
+      url,
+    });
+
+    if (res.data.success) {
+      cb(res.data.data);
+    }
+  } catch (err) {
+    (0,_alerts__WEBPACK_IMPORTED_MODULE_1__.showAlert)(err.response.data.error, 10, "fail");
+  }
+};
+
+const updateFormData = async (data, api, id, reloadPage) => {
+  const url = `${api}/${id}`;
+  try {
+    const res = await axios__WEBPACK_IMPORTED_MODULE_0___default()({
+      method: "PUT",
+      url,
+      data: data,
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    if (res.data.success) {
+      (0,_alerts__WEBPACK_IMPORTED_MODULE_1__.showAlert)("Data updated", 10, "succ");
+      (0,_modal__WEBPACK_IMPORTED_MODULE_2__.closeModal)();
+      window.setTimeout(() => {
+        location.assign(reloadPage);
+      }, 1000);
+    }
+  } catch (err) {
+    (0,_alerts__WEBPACK_IMPORTED_MODULE_1__.showAlert)(err.response.data.error, 10, "fail");
+  }
+};
+
+const updateData = async (data, api, id, reloadPage) => {
+  const url = `${api}/${id}`;
+  try {
+    const res = await axios__WEBPACK_IMPORTED_MODULE_0___default()({
+      method: "PUT",
+      url,
+      data: data,
+    });
+
+    if (res.data.success) {
+      (0,_alerts__WEBPACK_IMPORTED_MODULE_1__.showAlert)("Data updated", 10, "succ");
+      (0,_modal__WEBPACK_IMPORTED_MODULE_2__.closeModal)();
+      window.setTimeout(() => {
+        location.assign(reloadPage);
+      }, 1000);
+    }
+  } catch (err) {
+    (0,_alerts__WEBPACK_IMPORTED_MODULE_1__.showAlert)(err.response.data.error, 10, "fail");
+  }
+};
+
+const deleteData = async (api, id, reloadPage) => {
+  const url = `${api}/${id}`;
+  try {
+    const res = await axios__WEBPACK_IMPORTED_MODULE_0___default()({
+      method: "DELETE",
+      url,
+    });
+
+    if (res.data.success) {
+      (0,_alerts__WEBPACK_IMPORTED_MODULE_1__.showAlert)("Data deleted", 10, "succ");
+      (0,_modal__WEBPACK_IMPORTED_MODULE_2__.closeModal)();
+      window.setTimeout(() => {
+        location.assign(reloadPage);
+      }, 1000);
+    }
+  } catch (err) {
+    (0,_alerts__WEBPACK_IMPORTED_MODULE_1__.showAlert)(err.response.data.error, 10, "fail");
+  }
 };
 
 
@@ -2242,15 +2472,14 @@ const login = async (email, password) => {
       },
     });
 
-    console.log(res.data);
-
     if (res.data.success) {
+      (0,_alerts__WEBPACK_IMPORTED_MODULE_1__.showAlert)("Welcome!", 10, "succ");
       window.setTimeout(() => {
         location.assign("/admin/dashboard");
-      }, 1000);
+      }, 1200);
     }
   } catch (err) {
-    (0,_alerts__WEBPACK_IMPORTED_MODULE_1__.showAlert)(10);
+    (0,_alerts__WEBPACK_IMPORTED_MODULE_1__.showAlert)(err.response.data.error, 10, "fail");
   }
 };
 
@@ -2258,11 +2487,11 @@ const logout = async () => {
   try {
     const res = await axios__WEBPACK_IMPORTED_MODULE_0___default()({
       method: "GET",
-      url: "api/v1/admin/logout",
+      url: "/api/v1/admin/logout",
     });
     if (res.data.success) location.reload(true);
   } catch (err) {
-    console.log(err);
+    (0,_alerts__WEBPACK_IMPORTED_MODULE_1__.showAlert)(err.response.data.error, 10, "fail");
   }
 };
 
@@ -7121,11 +7350,10 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "addContent": () => (/* binding */ addContent),
 /* harmony export */   "closeModal": () => (/* binding */ closeModal),
 /* harmony export */   "openModal": () => (/* binding */ openModal)
 /* harmony export */ });
-const modal = document.querySelector(".edit-header-form-inputs");
+const modal = document.querySelector(".modal-body");
 
 const openModal = (markup) => {
   modal.innerHTML = markup;
@@ -7134,10 +7362,6 @@ const openModal = (markup) => {
 
 const closeModal = () => {
   $("#exampleModal").modal("hide");
-};
-
-const addContent = (markup) => {
-  console.log(markup);
 };
 
 
@@ -7251,47 +7475,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./public/scripts/_updateData.js":
-/*!***************************************!*\
-  !*** ./public/scripts/_updateData.js ***!
-  \***************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _alerts__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./_alerts */ "./public/scripts/_alerts.js");
-/* harmony import */ var _modal__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./_modal */ "./public/scripts/_modal.js");
-
-
-
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (async (data, api) => {
-  try {
-    const res = await axios__WEBPACK_IMPORTED_MODULE_0___default()({
-      method: "PUT",
-      url: api,
-      data: data,
-    });
-
-    if (res.data.success) {
-      (0,_modal__WEBPACK_IMPORTED_MODULE_2__.closeModal)();
-      window.setTimeout(() => {
-        location.assign("/admin/dashboard");
-      }, 700);
-    }
-  } catch (err) {
-    console.log(err);
-  }
-});
-
-
-/***/ }),
-
 /***/ "./public/scripts/index.js":
 /*!*********************************!*\
   !*** ./public/scripts/index.js ***!
@@ -7305,8 +7488,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _functions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./_functions */ "./public/scripts/_functions.js");
 /* harmony import */ var _login__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./_login */ "./public/scripts/_login.js");
-/* harmony import */ var _updateData__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./_updateData */ "./public/scripts/_updateData.js");
-/* harmony import */ var _modal__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./_modal */ "./public/scripts/_modal.js");
+/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./_api */ "./public/scripts/_api.js");
+/* harmony import */ var _add_enroll__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./_add-enroll */ "./public/scripts/_add-enroll.js");
+/* harmony import */ var _modal__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./_modal */ "./public/scripts/_modal.js");
+/* harmony import */ var _alerts__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./_alerts */ "./public/scripts/_alerts.js");
+
+
 
 
 
@@ -7314,8 +7501,25 @@ __webpack_require__.r(__webpack_exports__);
 
 // DOM ELEMENTS
 const loginForm = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".form--login");
-const editHeaderForm = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".edit-header-form");
 const editHeaderBtn = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".editHeader");
+const addSlideBtn = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".add-slide");
+const editSlideBtn = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectAll)(".edit-slide");
+const deleteSlideBtn = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectAll)(".delete-slide");
+const addImageBtn = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".add-image-btn");
+const editImageBtn = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectAll)(".edit-image");
+const deleteImageBtn = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectAll)(".delete-image");
+const addFeedbackBtn = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".add-feedback-btn");
+const editFeedbackBtn = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectAll)(".edit-feedback");
+const deleteFeedbackBtn = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectAll)(".delete-feedback");
+const deleteEnrollBtn = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectAll)(".delete-enroll");
+const deleteContactBtn = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectAll)(".delete-contact-btn");
+const enrollForm = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".enroll-form");
+const contactForm = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".contact-form");
+const addAboutBtn = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".add-about");
+const editAboutBtn = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectAll)(".edit-about");
+const updateAdminDetails = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".update-admin-details");
+const updatePasswordBtn = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".update-password");
+const logoutBtn = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".logout-btn");
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (() => {
   if (loginForm) {
@@ -7331,6 +7535,7 @@ const editHeaderBtn = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".ed
   if (editHeaderBtn) {
     editHeaderBtn.addEventListener("click", (e) => {
       const markup = `
+      <form class="edit-header-form">
       <div class="form-group">
       <label for="recipient-name" class="col-form-label"
         >Phone Number:</label
@@ -7338,10 +7543,10 @@ const editHeaderBtn = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".ed
       <input
         type="text"
         class="form-control phoneNumber"
+        name="phoneNumber"
         id="recipient-name"
         style="color: black"
         placeholder="+998973130903"
-        required
       />
     </div>
     <div class="form-group">
@@ -7351,10 +7556,10 @@ const editHeaderBtn = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".ed
       <input
         type="url"
         class="form-control instagram"
+        name="instagram"
         id="recipient-name"
         style="color: black"
         placeholder="https://www.instagram.com/xolbek_xalilov/"
-        required
       />
     </div>
     <div class="form-group">
@@ -7362,10 +7567,10 @@ const editHeaderBtn = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".ed
       <input
         type="url"
         class="form-control telegram"
+        name="telegram"
         id="recipient-name"
         style="color: black"
         placeholder="https://t.me/xalilov_01"
-        required
       />
     </div>
     <div class="form-group">
@@ -7373,31 +7578,725 @@ const editHeaderBtn = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".ed
       <input
         type="url"
         class="form-control facebook"
+        name="facebook"
         id="recipient-name"
         style="color: black"
         placeholder="https://www.facebook.com/xolbek.xalilov/"
-        required
       />
     </div>
+    <div class="modal-footer">
+    <button class="btn btn-primary">Add</button>
+  </div>
+    </form>
       `;
-      (0,_modal__WEBPACK_IMPORTED_MODULE_3__.openModal)(markup);
+      (0,_modal__WEBPACK_IMPORTED_MODULE_4__.openModal)(markup);
+
+      const editHeaderForm = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".edit-header-form");
+
+      if (editHeaderForm) {
+        editHeaderForm.addEventListener("submit", (e) => {
+          e.preventDefault();
+          const phoneNumber = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".phoneNumber").value;
+          const instagram = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".instagram").value;
+          const telegram = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".telegram").value;
+          const facebook = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".facebook").value;
+          const data = {
+            phoneNumber,
+            instagram,
+            telegram,
+            facebook,
+          };
+          (0,_api__WEBPACK_IMPORTED_MODULE_2__.updateData)(data, "/api/v1/edit-header", "/admin/dashboard");
+        });
+      }
     });
   }
 
-  if (editHeaderForm) {
-    editHeaderForm.addEventListener("submit", (e) => {
+  if (addSlideBtn) {
+    addSlideBtn.addEventListener("click", () => {
+      const markup = `
+      <form class="add-slide-form">
+      <div class="form-group">
+      <label for="recipient-name" class="col-form-label"
+        >Title</label
+      >
+      <input
+        type="text"
+        class="form-control title"
+        id="recipient-name"
+        style="color: black"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="recipient-name" class="col-form-label"
+        >Description</label
+      >
+      <textarea
+        type="url"
+        class="form-control description"
+        id="recipient-name"
+        style="color: black"
+        required
+      ></textarea>
+    </div>
+    <div class="form-group">
+      <label for="recipient-name" class="col-form-label">Image</label>
+      <input
+        type="file"
+        class="form-control image"
+        id="recipient-name"
+        style="color: black"
+        required
+      />
+    </div>
+    <div class="modal-footer">
+    <button class="btn btn-primary">Add</button>
+  </div>
+    </form>
+      `;
+      (0,_modal__WEBPACK_IMPORTED_MODULE_4__.openModal)(markup);
+
+      const addSlideForm = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".add-slide-form");
+
+      if (addSlideForm) {
+        addSlideForm.addEventListener("submit", (e) => {
+          e.preventDefault();
+          const title = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".title").value;
+          const description = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".description").value;
+          const image = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".image").files[0];
+
+          const form = new FormData();
+          form.append("title", title);
+          form.append("description", description);
+          form.append("image", image);
+          (0,_api__WEBPACK_IMPORTED_MODULE_2__.postFormData)(form, "/api/v1/admin/slides", "/admin/slides");
+        });
+      }
+    });
+  }
+
+  if (editSlideBtn) {
+    editSlideBtn.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        (0,_api__WEBPACK_IMPORTED_MODULE_2__.getDataById)("/api/v1/admin/slides", btn.value, (curData) => {
+          const markup = `
+          <form class="add-slide-form">
+          <div class="form-group">
+          <label for="recipient-name" class="col-form-label"
+            >Title</label
+          >
+          <input
+            type="text"
+            class="form-control title"
+            id="recipient-name"
+            style="color: black"
+            value="${curData.title}"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="recipient-name" class="col-form-label"
+            >Description</label
+          >
+          <textarea
+            type="url"
+            class="form-control description"
+            id="recipient-name"
+            style="color: black"
+            required
+          >${curData.description}</textarea>
+        </div>
+        <div class="form-group">
+          <label for="recipient-name" class="col-form-label">Image</label>
+          <input
+            type="file"
+            class="form-control image"
+            id="recipient-name"
+            style="color: black"
+          />
+        </div>
+        <div class="modal-footer">
+        <button class="btn btn-primary">Add</button>
+      </div>
+        </form>
+          `;
+          (0,_modal__WEBPACK_IMPORTED_MODULE_4__.openModal)(markup);
+          const updateSlideForm = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".add-slide-form");
+
+          updateSlideForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+
+            const title = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".title").value;
+            const description = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".description").value;
+            const image = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".image").files[0];
+
+            const form = new FormData();
+            form.append("title", title);
+            form.append("description", description);
+            form.append("image", image);
+            (0,_api__WEBPACK_IMPORTED_MODULE_2__.updateFormData)(
+              form,
+              "/api/v1/admin/slides",
+              btn.value,
+              "/admin/slides"
+            );
+          });
+        });
+      });
+    });
+  }
+
+  if (deleteSlideBtn) {
+    deleteSlideBtn.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        (0,_api__WEBPACK_IMPORTED_MODULE_2__.deleteData)("/api/v1/admin/slides", btn.value, "/admin/slides");
+      });
+    });
+  }
+
+  if (addImageBtn) {
+    addImageBtn.addEventListener("click", () => {
+      const markup = `
+      <form class="add-slide-form">
+    <div class="form-group">
+      <label for="recipient-name" class="col-form-label">Image</label>
+      <input
+        type="file"
+        class="form-control image"
+        id="recipient-name"
+        style="color: black"
+        required
+      />
+    </div>
+    <div class="modal-footer">
+    <button class="btn btn-primary">Add</button>
+  </div>
+    </form>
+      `;
+      (0,_modal__WEBPACK_IMPORTED_MODULE_4__.openModal)(markup);
+
+      const addImageForm = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".add-slide-form");
+
+      if (addImageForm) {
+        addImageForm.addEventListener("submit", (e) => {
+          e.preventDefault();
+          const image = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".image").files[0];
+
+          const form = new FormData();
+          form.append("image", image);
+          (0,_api__WEBPACK_IMPORTED_MODULE_2__.postFormData)(form, "/api/v1/admin/gallery", "/admin/gallery");
+        });
+      }
+    });
+  }
+
+  if (editImageBtn) {
+    editImageBtn.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const markup = `
+      <form class="add-image-form">
+    <div class="form-group">
+      <label for="recipient-name" class="col-form-label">Image</label>
+      <input
+        type="file"
+        class="form-control image"
+        id="recipient-name"
+        style="color: black"
+        required
+      />
+    </div>
+    <div class="modal-footer">
+    <button class="btn btn-primary">Add</button>
+  </div>
+    </form>
+      `;
+        (0,_modal__WEBPACK_IMPORTED_MODULE_4__.openModal)(markup);
+
+        const updateImageForm = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".add-image-form");
+
+        updateImageForm.addEventListener("submit", (e) => {
+          e.preventDefault();
+
+          const image = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".image").files[0];
+
+          const form = new FormData();
+          form.append("image", image);
+          (0,_api__WEBPACK_IMPORTED_MODULE_2__.updateFormData)(
+            form,
+            "/api/v1/admin/gallery",
+            btn.value,
+            "/admin/gallery"
+          );
+        });
+      });
+    });
+  }
+
+  if (deleteImageBtn) {
+    deleteImageBtn.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        (0,_api__WEBPACK_IMPORTED_MODULE_2__.deleteData)("/api/v1/admin/gallery", btn.value, "/admin/gallery");
+      });
+    });
+  }
+
+  if (addFeedbackBtn) {
+    addFeedbackBtn.addEventListener("click", () => {
+      const markup = `
+      <form class="add-feedback-form">
+      <div class="form-group">
+      <label for="recipient-name" class="col-form-label"
+        >Title</label
+      >
+      <input
+        type="text"
+        class="form-control title"
+        id="recipient-name"
+        style="color: black"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="recipient-name" class="col-form-label"
+        >Description</label
+      >
+      <textarea
+        type="url"
+        class="form-control description"
+        id="recipient-name"
+        style="color: black"
+        required
+      ></textarea>
+    </div>
+    <div class="form-group">
+    <label for="recipient-name" class="col-form-label"
+      >Author Name</label
+    >
+    <input
+      type="text"
+      class="form-control authorName"
+      id="recipient-name"
+      style="color: black"
+      required
+    />
+  </div>
+  <div class="form-group">
+  <label for="recipient-name" class="col-form-label"
+    >Author Profession</label
+  >
+  <input
+    type="text"
+    class="form-control authorProfession"
+    id="recipient-name"
+    style="color: black"
+    required
+  />
+</div>
+    <div class="form-group">
+      <label for="recipient-name" class="col-form-label">Author Image</label>
+      <input
+        type="file"
+        class="form-control image"
+        id="recipient-name"
+        style="color: black"
+        required
+      />
+    </div>
+    <div class="modal-footer">
+    <button class="btn btn-primary">Add</button>
+  </div>
+    </form>
+      `;
+      (0,_modal__WEBPACK_IMPORTED_MODULE_4__.openModal)(markup);
+
+      const addFeedbackForm = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".add-feedback-form");
+
+      if (addFeedbackForm) {
+        addFeedbackForm.addEventListener("submit", (e) => {
+          e.preventDefault();
+          const title = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".title").value;
+          const description = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".description").value;
+          const authorName = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".authorName").value;
+          const authorProfession = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".authorProfession").value;
+          const image = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".image").files[0];
+
+          const form = new FormData();
+          form.append("title", title);
+          form.append("description", description);
+          form.append("authorName", authorName);
+          form.append("authorProfession", authorProfession);
+          form.append("image", image);
+          (0,_api__WEBPACK_IMPORTED_MODULE_2__.postFormData)(form, "/api/v1/admin/feedbacks", "/admin/feedbacks");
+        });
+      }
+    });
+  }
+
+  if (editFeedbackBtn) {
+    editFeedbackBtn.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        (0,_api__WEBPACK_IMPORTED_MODULE_2__.getDataById)("/api/v1/admin/feedbacks", btn.value, (curData) => {
+          const markup = `
+          <form class="add-feedback-form">
+          <div class="form-group">
+          <label for="recipient-name" class="col-form-label"
+            >Title</label
+          >
+          <input
+            type="text"
+            class="form-control title"
+            id="recipient-name"
+            style="color: black"
+            value="${curData.title}"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="recipient-name" class="col-form-label"
+            >Description</label
+          >
+          <textarea
+            type="url"
+            class="form-control description"
+            id="recipient-name"
+            style="color: black"
+            required
+          >${curData.title}</textarea>
+        </div>
+        <div class="form-group">
+        <label for="recipient-name" class="col-form-label"
+          >Author Name</label
+        >
+        <input
+          type="text"
+          class="form-control authorName"
+          id="recipient-name"
+          style="color: black"
+          value="${curData.authorName}"
+          required
+        />
+      </div>
+      <div class="form-group">
+      <label for="recipient-name" class="col-form-label"
+        >Author Profession</label
+      >
+      <input
+        type="text"
+        class="form-control authorProfession"
+        id="recipient-name"
+        style="color: black"
+        value="${curData.authorProfession}"
+        required
+      />
+    </div>
+        <div class="form-group">
+          <label for="recipient-name" class="col-form-label">Author Image</label>
+          <input
+            type="file"
+            class="form-control image"
+            id="recipient-name"
+            style="color: black"
+          />
+        </div>
+        <div class="modal-footer">
+        <button class="btn btn-primary">Add</button>
+      </div>
+        </form>
+          `;
+          (0,_modal__WEBPACK_IMPORTED_MODULE_4__.openModal)(markup);
+          const updateFeedbackForm = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".add-feedback-form");
+
+          updateFeedbackForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+
+            const title = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".title").value;
+            const description = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".description").value;
+            const authorName = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".authorName").value;
+            const authorProfession = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".authorProfession").value;
+            const image = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".image").files[0];
+
+            const form = new FormData();
+            form.append("title", title);
+            form.append("description", description);
+            form.append("authorName", authorName);
+            form.append("authorProfession", authorProfession);
+            form.append("image", image);
+            (0,_api__WEBPACK_IMPORTED_MODULE_2__.updateFormData)(
+              form,
+              "/api/v1/admin/feedbacks",
+              btn.value,
+              "/admin/feedbacks"
+            );
+          });
+        });
+      });
+    });
+  }
+
+  if (deleteFeedbackBtn) {
+    deleteFeedbackBtn.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        (0,_api__WEBPACK_IMPORTED_MODULE_2__.deleteData)("/api/v1/admin/feedbacks", btn.value, "/admin/feedbacks");
+      });
+    });
+  }
+
+  if (enrollForm) {
+    enrollForm.addEventListener("submit", (e) => {
       e.preventDefault();
-      const phoneNumber = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".phoneNumber").value;
-      const instagram = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".instagram").value;
-      const telegram = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".telegram").value;
-      const facebook = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".facebook").value;
+      const name = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".ism").value;
+      const pillName = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".dori-nomi").value;
+      const phone = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".telefon").value;
+
       const data = {
-        phoneNumber,
-        instagram,
-        telegram,
-        facebook,
+        name,
+        pillName,
+        phone,
       };
-      (0,_updateData__WEBPACK_IMPORTED_MODULE_2__["default"])(data, "/api/v1/edit-header");
+
+      (0,_add_enroll__WEBPACK_IMPORTED_MODULE_3__.addEnroll)(data, "/api/v1/enrolls");
+    });
+  }
+
+  if (deleteEnrollBtn) {
+    deleteEnrollBtn.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        (0,_api__WEBPACK_IMPORTED_MODULE_2__.deleteData)("/api/v1/admin/enrolls", btn.value, "/admin/enrolls");
+      });
+    });
+  }
+
+  if (contactForm) {
+    contactForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const name = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".contact-name").value;
+      const phone = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".contact-phone").value;
+      const message = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".contact-message").value;
+
+      const data = {
+        name,
+        phone,
+        message,
+      };
+
+      (0,_add_enroll__WEBPACK_IMPORTED_MODULE_3__.addContact)(data, "/api/v1/contacts");
+    });
+  }
+
+  if (deleteContactBtn) {
+    deleteContactBtn.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        (0,_api__WEBPACK_IMPORTED_MODULE_2__.deleteData)("/api/v1/admin/contacts", btn.value, "/admin/contacts");
+      });
+    });
+  }
+
+  if (addAboutBtn) {
+    addAboutBtn.addEventListener("click", () => {
+      const markup = `
+      <form class="add-about-form">
+      <div class="form-group">
+      <label for="recipient-name" class="col-form-label"
+        >Title</label
+      >
+      <input
+        type="text"
+        class="form-control title"
+        id="recipient-name"
+        style="color: black"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="recipient-name" class="col-form-label"
+        >Description</label
+      >
+      <textarea
+        type="url"
+        class="form-control description"
+        id="recipient-name"
+        style="color: black"
+        required
+      ></textarea>
+    </div>
+    <div class="modal-footer">
+    <button class="btn btn-primary">Add</button>
+  </div>
+    </form>
+      `;
+      (0,_modal__WEBPACK_IMPORTED_MODULE_4__.openModal)(markup);
+
+      const addAboutForm = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".add-about-form");
+
+      if (addAboutForm) {
+        addAboutForm.addEventListener("submit", (e) => {
+          e.preventDefault();
+          const title = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".title").value;
+          const description = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".description").value;
+
+          const data = {
+            title,
+            description,
+          };
+          (0,_api__WEBPACK_IMPORTED_MODULE_2__.postData)(data, "/api/v1/admin/about", "/admin/about");
+        });
+      }
+    });
+  }
+
+  if (editAboutBtn) {
+    editAboutBtn.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        (0,_api__WEBPACK_IMPORTED_MODULE_2__.getDataById)("/api/v1/admin", "about", (curData) => {
+          const markup = `
+          <form class="update-about-form">
+          <div class="form-group">
+          <label for="recipient-name" class="col-form-label"
+            >Title</label
+          >
+          <input
+            type="text"
+            class="form-control title"
+            id="recipient-name"
+            style="color: black"
+            value="${curData.title}"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="recipient-name" class="col-form-label"
+            >Description</label
+          >
+          <textarea
+            type="url"
+            class="form-control description"
+            id="recipient-name"
+            style="color: black"
+            required
+          >${curData.description}</textarea>
+        </div>
+        <div class="modal-footer">
+        <button class="btn btn-primary">Add</button>
+      </div>
+        </form>
+          `;
+          (0,_modal__WEBPACK_IMPORTED_MODULE_4__.openModal)(markup);
+          const updatePasswordForm = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".update-about-form");
+
+          updateAboutForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+
+            const title = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".title").value;
+            const description = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".description").value;
+
+            const data = {
+              title,
+              description,
+            };
+            (0,_api__WEBPACK_IMPORTED_MODULE_2__.updateData)(data, "/api/v1/admin", "about", "/admin/about");
+          });
+        });
+      });
+    });
+  }
+
+  if (updateAdminDetails) {
+    updateAdminDetails.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const name = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".admin-name").value;
+      const email = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".admin-email").value;
+
+      const data = {
+        name,
+        email,
+      };
+
+      (0,_api__WEBPACK_IMPORTED_MODULE_2__.updateData)(data, "/api/v1/admin", "updatedetails", "/admin/me");
+    });
+  }
+
+  if (updatePasswordBtn) {
+    updatePasswordBtn.addEventListener("click", () => {
+      const markup = `
+      <form class="update-password-form">
+      <div class="form-group">
+      <label for="recipient-name" class="col-form-label"
+        >Current Password</label
+      >
+      <input
+        type="password"
+        class="form-control currentPassword"
+        id="recipient-name"
+        style="color: black"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="recipient-name" class="col-form-label"
+        >New Password</label
+      >
+      <input
+        type="password"
+        class="form-control newPassword"
+        id="recipient-name"
+        style="color: black"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="recipient-name" class="col-form-label"
+        >Confirm Password</label
+      >
+      <input
+        type="password"
+        class="form-control confirmPassword"
+        id="recipient-name"
+        style="color: black"
+        required
+      />
+    </div>
+    <div class="modal-footer">
+    <button class="btn btn-primary">Add</button>
+  </div>
+    </form>
+      `;
+      (0,_modal__WEBPACK_IMPORTED_MODULE_4__.openModal)(markup);
+      const updatePasswordForm = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".update-password-form");
+
+      updatePasswordForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const currentPassword = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".currentPassword").value;
+        const newPassword = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".newPassword").value;
+        const confirmPassword = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".confirmPassword").value;
+
+        const data = {
+          currentPassword,
+          newPassword,
+          confirmPassword,
+        };
+
+        if (newPassword.length < 5) {
+          return (0,_alerts__WEBPACK_IMPORTED_MODULE_5__.showAlert)(
+            "password must be at least 5 characters long",
+            10,
+            "fail"
+          );
+        }
+
+        if (newPassword !== confirmPassword) {
+          return (0,_alerts__WEBPACK_IMPORTED_MODULE_5__.showAlert)("confirm password doesn't match", 10, "fail");
+        }
+        (0,_api__WEBPACK_IMPORTED_MODULE_2__.updateData)(data, "/api/v1/admin", "updatepassword", "/admin/login");
+      });
+    });
+  }
+
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", () => {
+      (0,_login__WEBPACK_IMPORTED_MODULE_1__.logout)();
     });
   }
 });

@@ -1,15 +1,24 @@
 import { selectOne } from "./_functions";
 
+const alert = selectOne(".alert-box");
+const alertMessage = selectOne(".alert-message");
+const removeBtn = selectOne(".alert-remove");
+
 export const hideAlert = () => {
-  const el = selectOne(".alert");
-  if (el) el.parentElement.removeChild(el);
+  alert.classList.remove(`show`);
 };
 
-export const showAlert = (time) => {
+export const showAlert = (text, time, type) => {
   hideAlert();
-  const markup = `<div class="alert alert-danger mt-2" role="alert">
-  Email or password is incorrect!
-</div>`;
-  document.querySelector(".al").insertAdjacentHTML("afterbegin", markup);
+
+  alertMessage.innerText = text;
+  alert.classList.add(`alert-${type}`);
+  alert.classList.add(`show`);
   window.setTimeout(hideAlert, time * 1000);
 };
+
+if (removeBtn) {
+  removeBtn.addEventListener("click", () => {
+    hideAlert();
+  });
+}
