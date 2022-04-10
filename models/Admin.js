@@ -18,8 +18,6 @@ const AdminSchema = new mongoose.Schema({
     select: false,
     required: true,
   },
-  resetPasswordToken: String,
-  resetPasswordExpire: Date,
 });
 
 // Encrypt password using bcrypt

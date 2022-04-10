@@ -7,6 +7,7 @@ const {
   getAdmin,
   updateAdminDetails,
   updatePassword,
+  getAdminPage,
 } = require("../controllers/admin");
 
 const { protect } = require("../middleware/auth");
@@ -14,6 +15,8 @@ const { protect } = require("../middleware/auth");
 const router = express.Router();
 
 router.get("/admin/login", getLoginAdmin);
+
+router.get("/admin", getAdminPage);
 
 router.get("/admin/me", protect, getAdmin);
 

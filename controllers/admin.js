@@ -1,7 +1,33 @@
+const jwt = require("jsonwebtoken");
 const Admin = require("../models/Admin");
 const asyncHandler = require("../middleware/async");
 const ErrorResponse = require("../utils/errorResponse");
-const crypto = require("crypto");
+
+/**
+ * @desc    Get admin Page
+ * @route   GET /admin
+ * @access  Public
+ */
+exports.getAdminPage = asyncHandler(async (req, res, next) => {
+  let token;
+
+  if (!req.cookies.token) {
+    return res.redirect("/admin/login");
+  } else {
+    token = req.cookies.token;
+  }
+
+  // Verify token
+  const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+  const admin = await Admin.findById(decoded.id);
+
+  if (!admin) {
+    return res.redirect("/admin/login");
+  }
+
+  res.redirect("/admin/dashboard");
+});
 
 /**
  * @desc    Get Login admin

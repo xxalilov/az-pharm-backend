@@ -6,7 +6,7 @@ const Slide = require("../models/Slide");
 const asyncHandler = require("../middleware/async");
 
 exports.getHome = asyncHandler(async (req, res, next) => {
-  const home = await Home.findOne();
+  let home = await Home.findOne();
   const about = await About.find();
   const feedbacks = await Feedback.find();
   const gallery = await Gallery.find();
@@ -14,6 +14,16 @@ exports.getHome = asyncHandler(async (req, res, next) => {
 
   if (!home) {
     await Home.create({});
+    home = await Home.findOne();
+    const homeDatas = {
+      home,
+      about,
+      feedbacks,
+      gallery,
+      slides,
+    };
+
+    res.status(200).render("index", { title: "Az Pharm", data: homeDatas });
   }
 
   const homeDatas = {
