@@ -53,6 +53,20 @@ exports.getHomeForAdmin = asyncHandler(async (req, res, next) => {
 });
 
 /**
+ * @desc    Get Home For Admin (JSON)
+ * @route   GET /api/v1/admin/homedatas
+ * @access  Private
+ */
+exports.getHomeForAdminToJSON = asyncHandler(async (req, res, next) => {
+  const homeDatas = await Home.findOne();
+
+  res.status(200).json({
+    success: true,
+    data: homeDatas,
+  });
+});
+
+/**
  * @desc    Update Home
  * @route   PUT api/v1/edit-header
  * @access  Private

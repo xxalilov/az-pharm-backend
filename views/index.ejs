@@ -94,7 +94,7 @@
                                     <div class="single-slider__content">
                                         <h3 class="single-slider__heading"><%= slide.title %> </h3>
                                         <p class="single-slider__text"><%= slide.description %> </p>
-                                        <a class="single-slider__button button" href="">Buyurtma berish</a>
+                                        <a class="single-slider__button button" href="<%= data.home.telegram %>">Buyurtma berish</a>
                                     </div>
                                 </div>
                             </li>
@@ -189,7 +189,7 @@
             </div>
         </div>
         <div class="how-we-work__footer">
-            <button class="button">Konsultatsiya olish</button>
+            <a class="button" href="<%= data.home.telegram %>">Konsultatsiya olish</a>
             <span>Bizda har qanday dorini topa olasiz!</span>
         </div>
         <div class="how-we-work__decoration">
@@ -203,7 +203,7 @@
     <div class="flex-container">
         <div class="about-us__video video">
             <div class="video__layer">
-                <button class="video__play">
+                <button class="video__play" data-video="<%= data.about[0]?.video %>">
                     <svg width="27" height="37" viewBox="0 0 27 37" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M26.5 18.5L0.5 0V37L26.5 18.5Z" fill="white"/>
                     </svg>
@@ -213,7 +213,7 @@
         <div class="about-us__info">
             <h2 class="section__heading about-us__heading"><%= data.about[0]?.title %></h2>
             <p class="about-us__text"><%= data.about[0]?.description %></p>
-            <button class="button">Konsultatsiya olish</button>
+            <a class="button" href="<%= data.home.telegram %>">Konsultatsiya olish</a>
         </div>
     </div>
     </div>

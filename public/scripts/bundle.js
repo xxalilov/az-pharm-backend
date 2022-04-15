@@ -7520,6 +7520,7 @@ const editAboutBtn = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectAll)(".edi
 const updateAdminDetails = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".update-admin-details");
 const updatePasswordBtn = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".update-password");
 const logoutBtn = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".logout-btn");
+const playVideoBtn = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".video__play");
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (() => {
   if (loginForm) {
@@ -7534,7 +7535,8 @@ const logoutBtn = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".logout
 
   if (editHeaderBtn) {
     editHeaderBtn.addEventListener("click", (e) => {
-      const markup = `
+      (0,_api__WEBPACK_IMPORTED_MODULE_2__.getDataById)("/api/v1/admin", "homedatas", (curData) => {
+        const markup = `
       <form class="edit-header-form">
       <div class="form-group">
       <label for="recipient-name" class="col-form-label"
@@ -7543,10 +7545,11 @@ const logoutBtn = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".logout
       <input
         type="text"
         class="form-control phoneNumber"
+        value="${curData.phoneNumber}"
         name="phoneNumber"
         id="recipient-name"
         style="color: black"
-        placeholder="+998973130903"
+        required
       />
     </div>
     <div class="form-group">
@@ -7556,10 +7559,11 @@ const logoutBtn = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".logout
       <input
         type="url"
         class="form-control instagram"
+        value="${curData.instagram}"
         name="instagram"
         id="recipient-name"
         style="color: black"
-        placeholder="https://www.instagram.com/xolbek_xalilov/"
+        required
       />
     </div>
     <div class="form-group">
@@ -7567,10 +7571,11 @@ const logoutBtn = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".logout
       <input
         type="url"
         class="form-control telegram"
+        value="${curData.telegram}"
         name="telegram"
         id="recipient-name"
         style="color: black"
-        placeholder="https://t.me/xalilov_01"
+        required
       />
     </div>
     <div class="form-group">
@@ -7578,10 +7583,11 @@ const logoutBtn = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".logout
       <input
         type="url"
         class="form-control facebook"
+        value="${curData.facebook}"
         name="facebook"
         id="recipient-name"
         style="color: black"
-        placeholder="https://www.facebook.com/xolbek.xalilov/"
+        required
       />
     </div>
     <div class="modal-footer">
@@ -7589,26 +7595,27 @@ const logoutBtn = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".logout
   </div>
     </form>
       `;
-      (0,_modal__WEBPACK_IMPORTED_MODULE_4__.openModal)(markup);
+        (0,_modal__WEBPACK_IMPORTED_MODULE_4__.openModal)(markup);
 
-      const editHeaderForm = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".edit-header-form");
+        const editHeaderForm = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".edit-header-form");
 
-      if (editHeaderForm) {
-        editHeaderForm.addEventListener("submit", (e) => {
-          e.preventDefault();
-          const phoneNumber = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".phoneNumber").value;
-          const instagram = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".instagram").value;
-          const telegram = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".telegram").value;
-          const facebook = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".facebook").value;
-          const data = {
-            phoneNumber,
-            instagram,
-            telegram,
-            facebook,
-          };
-          (0,_api__WEBPACK_IMPORTED_MODULE_2__.updateData)(data, "/api/v1/edit-header", "/admin/dashboard");
-        });
-      }
+        if (editHeaderForm) {
+          editHeaderForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const phoneNumber = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".phoneNumber").value;
+            const instagram = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".instagram").value;
+            const telegram = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".telegram").value;
+            const facebook = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".facebook").value;
+            const data = {
+              phoneNumber,
+              instagram,
+              telegram,
+              facebook,
+            };
+            (0,_api__WEBPACK_IMPORTED_MODULE_2__.updateData)(data, "/api/v1/edit-header", "/admin/dashboard");
+          });
+        }
+      });
     });
   }
 
@@ -8121,6 +8128,18 @@ const logoutBtn = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".logout
         required
       ></textarea>
     </div>
+  <div class="form-group">
+      <label for="recipient-name" class="col-form-label"
+        >Video Link(Copy from You Tube)</label
+      >
+      <input
+        type="url"
+        class="form-control video"
+        id="recipient-name"
+        style="color: black"
+        required
+      />
+    </div>
     <div class="modal-footer">
     <button class="btn btn-primary">Add</button>
   </div>
@@ -8135,10 +8154,12 @@ const logoutBtn = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".logout
           e.preventDefault();
           const title = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".title").value;
           const description = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".description").value;
+          const video = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".video").value;
 
           const data = {
             title,
             description,
+            video,
           };
           (0,_api__WEBPACK_IMPORTED_MODULE_2__.postData)(data, "/api/v1/admin/about", "/admin/about");
         });
@@ -8177,23 +8198,38 @@ const logoutBtn = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".logout
             required
           >${curData.description}</textarea>
         </div>
+        <div class="form-group">
+      <label for="recipient-name" class="col-form-label"
+        >Video Link(Copy from You Tube)</label
+      >
+      <input
+        type="url"
+        class="form-control video"
+        value="${curData.video}"
+        id="recipient-name"
+        style="color: black"
+        required
+      />
+    </div>
         <div class="modal-footer">
         <button class="btn btn-primary">Add</button>
       </div>
         </form>
           `;
           (0,_modal__WEBPACK_IMPORTED_MODULE_4__.openModal)(markup);
-          const updatePasswordForm = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".update-about-form");
+          const updateAboutForm = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".update-about-form");
 
           updateAboutForm.addEventListener("submit", (e) => {
             e.preventDefault();
 
             const title = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".title").value;
             const description = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".description").value;
+            const video = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".video").value;
 
             const data = {
               title,
               description,
+              video,
             };
             (0,_api__WEBPACK_IMPORTED_MODULE_2__.updateData)(data, "/api/v1/admin", "about", "/admin/about");
           });
@@ -8297,6 +8333,13 @@ const logoutBtn = (0,_functions__WEBPACK_IMPORTED_MODULE_0__.selectOne)(".logout
   if (logoutBtn) {
     logoutBtn.addEventListener("click", () => {
       (0,_login__WEBPACK_IMPORTED_MODULE_1__.logout)();
+    });
+  }
+
+  if (playVideoBtn) {
+    playVideoBtn.addEventListener("click", () => {
+      let videoUrl = playVideoBtn.getAttribute("data-video");
+      console.log(videoUrl);
     });
   }
 });
