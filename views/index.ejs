@@ -203,7 +203,7 @@
     <div class="flex-container">
         <div class="about-us__video video">
             <div class="video__layer">
-                <button class="video__play" data-video="<%= data.about[0]?.video %>">
+                <button class="video__play">
                     <svg width="27" height="37" viewBox="0 0 27 37" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M26.5 18.5L0.5 0V37L26.5 18.5Z" fill="white"/>
                     </svg>
@@ -389,7 +389,7 @@
 </footer>
 
 <div class="video-modal d-none">
-    <iframe width="800" height="500" src="https://www.youtube.com/embed/eLXPE9VzU0c" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <iframe width="800" height="500" src="<%= data.about[0]?.video %>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
 
 <div class="dark-layer d-none"></div>

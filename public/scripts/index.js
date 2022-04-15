@@ -33,7 +33,6 @@ const editAboutBtn = selectAll(".edit-about");
 const updateAdminDetails = selectOne(".update-admin-details");
 const updatePasswordBtn = selectOne(".update-password");
 const logoutBtn = selectOne(".logout-btn");
-const playVideoBtn = selectOne(".video__play");
 
 export default () => {
   if (loginForm) {
@@ -846,13 +845,6 @@ export default () => {
   if (logoutBtn) {
     logoutBtn.addEventListener("click", () => {
       logout();
-    });
-  }
-
-  if (playVideoBtn) {
-    playVideoBtn.addEventListener("click", () => {
-      let videoUrl = playVideoBtn.getAttribute("data-video");
-      console.log(videoUrl);
     });
   }
 };

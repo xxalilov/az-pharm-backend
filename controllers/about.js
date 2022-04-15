@@ -48,6 +48,14 @@ exports.createAbout = asyncHandler(async (req, res, next) => {
     return next(new ErrorResponse(error, 400));
   }
 
+  // https://youtu.be/BGplCfsGG8M
+  // https://youtube.com/embed/BGplCfsGG8M
+
+  let video = req.body.video;
+  let url = video.slice(17);
+
+  req.body.video = `https://youtube.com/embed/${url}`;
+
   const about = await About.create(req.body);
 
   res.status(201).json({
@@ -73,6 +81,11 @@ exports.updateAbout = asyncHandler(async (req, res, next) => {
   if (error) {
     return next(new ErrorResponse(error, 400));
   }
+
+  let video = req.body.video;
+  let url = video.slice(17);
+
+  req.body.video = `https://youtube.com/embed/${url}`;
 
   about = await About.findByIdAndUpdate(about._id, req.body, {
     new: true,

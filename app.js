@@ -30,7 +30,7 @@ const errorRoute = require("./routes/error");
 dotenv.config({ path: "./config/config.env" });
 
 // Connect to Dabase
-// connectDB();
+connectDB();
 
 const app = express();
 
@@ -46,7 +46,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 // Sanitize data
-// app.use(mongoSanitize());
+app.use(mongoSanitize());
 
 // Implement Cors
 app.use(cors());
@@ -55,36 +55,36 @@ app.use(cors());
 // app.use(helmet());
 
 // Prevent XSS attacks
-// app.use(xss());
+app.use(xss());
 
 // Rate limiting
-// const limiter = rateLimit({
-//   windowMs: 10 * 60 * 1000, // 10 mins
-//   max: 1000,
-// });
-//
-// app.use(limiter);
+const limiter = rateLimit({
+  windowMs: 10 * 60 * 1000, // 10 mins
+  max: 1000,
+});
+
+app.use(limiter);
 
 // Prevent http param pollution
-// app.use(hpp());
+app.use(hpp());
 //
-// app.use(compression());
+app.use(compression());
 
-// app.use(
-//   "/public/uploads",
-//   express.static(path.join(__dirname, "public", "uploads"))
-// );
-// app.use(express.static(path.join(__dirname, "public")));
-//
+app.use(
+  "/public/uploads",
+  express.static(path.join(__dirname, "public", "uploads"))
+);
+app.use(express.static(path.join(__dirname, "public")));
+
 // // File uploads
-// app.use(
-//   multer({ storage: fileStorage, fileFilter: fileFilter }).single("image")
-// );
-//
+app.use(
+  multer({ storage: fileStorage, fileFilter: fileFilter }).single("image")
+);
+
 // // Dev Logging middleware
-// if (process.env.NODE_ENV === "development") {
-//   app.use(morgan("dev"));
-// }
+if (process.env.NODE_ENV === "development") {
+  app.use(morgan("dev"));
+}
 
 app.use(homeRoute);
 app.use(adminRoute);
