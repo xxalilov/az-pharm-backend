@@ -1304,6 +1304,21 @@ img {
   margin-right: 15px;
 }
 
+.video-modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  z-index: 6;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 60px 20px;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
 @media only screen and (max-width: 1200px) {
   .site-header {
     padding-top: 10px;
