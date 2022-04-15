@@ -10,6 +10,10 @@ const aboutSchema = new mongoose.Schema({
     default:
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
   },
+  video: {
+    type: String,
+    required: true,
+  },
 });
 
 module.exports = mongoose.model("About", aboutSchema);

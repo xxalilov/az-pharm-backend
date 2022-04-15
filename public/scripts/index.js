@@ -33,6 +33,7 @@ const editAboutBtn = selectAll(".edit-about");
 const updateAdminDetails = selectOne(".update-admin-details");
 const updatePasswordBtn = selectOne(".update-password");
 const logoutBtn = selectOne(".logout-btn");
+const playVideoBtn = selectOne(".video__play");
 
 export default () => {
   if (loginForm) {
@@ -47,7 +48,8 @@ export default () => {
 
   if (editHeaderBtn) {
     editHeaderBtn.addEventListener("click", (e) => {
-      const markup = `
+      getDataById("/api/v1/admin", "homedatas", (curData) => {
+        const markup = `
       <form class="edit-header-form">
       <div class="form-group">
       <label for="recipient-name" class="col-form-label"
@@ -56,10 +58,11 @@ export default () => {
       <input
         type="text"
         class="form-control phoneNumber"
+        value="${curData.phoneNumber}"
         name="phoneNumber"
         id="recipient-name"
         style="color: black"
-        placeholder="+998973130903"
+        required
       />
     </div>
     <div class="form-group">
@@ -69,10 +72,11 @@ export default () => {
       <input
         type="url"
         class="form-control instagram"
+        value="${curData.instagram}"
         name="instagram"
         id="recipient-name"
         style="color: black"
-        placeholder="https://www.instagram.com/xolbek_xalilov/"
+        required
       />
     </div>
     <div class="form-group">
@@ -80,10 +84,11 @@ export default () => {
       <input
         type="url"
         class="form-control telegram"
+        value="${curData.telegram}"
         name="telegram"
         id="recipient-name"
         style="color: black"
-        placeholder="https://t.me/xalilov_01"
+        required
       />
     </div>
     <div class="form-group">
@@ -91,10 +96,11 @@ export default () => {
       <input
         type="url"
         class="form-control facebook"
+        value="${curData.facebook}"
         name="facebook"
         id="recipient-name"
         style="color: black"
-        placeholder="https://www.facebook.com/xolbek.xalilov/"
+        required
       />
     </div>
     <div class="modal-footer">
@@ -102,26 +108,27 @@ export default () => {
   </div>
     </form>
       `;
-      openModal(markup);
+        openModal(markup);
 
-      const editHeaderForm = selectOne(".edit-header-form");
+        const editHeaderForm = selectOne(".edit-header-form");
 
-      if (editHeaderForm) {
-        editHeaderForm.addEventListener("submit", (e) => {
-          e.preventDefault();
-          const phoneNumber = selectOne(".phoneNumber").value;
-          const instagram = selectOne(".instagram").value;
-          const telegram = selectOne(".telegram").value;
-          const facebook = selectOne(".facebook").value;
-          const data = {
-            phoneNumber,
-            instagram,
-            telegram,
-            facebook,
-          };
-          updateData(data, "/api/v1/edit-header", "/admin/dashboard");
-        });
-      }
+        if (editHeaderForm) {
+          editHeaderForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const phoneNumber = selectOne(".phoneNumber").value;
+            const instagram = selectOne(".instagram").value;
+            const telegram = selectOne(".telegram").value;
+            const facebook = selectOne(".facebook").value;
+            const data = {
+              phoneNumber,
+              instagram,
+              telegram,
+              facebook,
+            };
+            updateData(data, "/api/v1/edit-header", "/admin/dashboard");
+          });
+        }
+      });
     });
   }
 
@@ -634,6 +641,18 @@ export default () => {
         required
       ></textarea>
     </div>
+  <div class="form-group">
+      <label for="recipient-name" class="col-form-label"
+        >Video Link(Copy from You Tube)</label
+      >
+      <input
+        type="url"
+        class="form-control video"
+        id="recipient-name"
+        style="color: black"
+        required
+      />
+    </div>
     <div class="modal-footer">
     <button class="btn btn-primary">Add</button>
   </div>
@@ -648,10 +667,12 @@ export default () => {
           e.preventDefault();
           const title = selectOne(".title").value;
           const description = selectOne(".description").value;
+          const video = selectOne(".video").value;
 
           const data = {
             title,
             description,
+            video,
           };
           postData(data, "/api/v1/admin/about", "/admin/about");
         });
@@ -690,23 +711,38 @@ export default () => {
             required
           >${curData.description}</textarea>
         </div>
+        <div class="form-group">
+      <label for="recipient-name" class="col-form-label"
+        >Video Link(Copy from You Tube)</label
+      >
+      <input
+        type="url"
+        class="form-control video"
+        value="${curData.video}"
+        id="recipient-name"
+        style="color: black"
+        required
+      />
+    </div>
         <div class="modal-footer">
         <button class="btn btn-primary">Add</button>
       </div>
         </form>
           `;
           openModal(markup);
-          const updatePasswordForm = selectOne(".update-about-form");
+          const updateAboutForm = selectOne(".update-about-form");
 
           updateAboutForm.addEventListener("submit", (e) => {
             e.preventDefault();
 
             const title = selectOne(".title").value;
             const description = selectOne(".description").value;
+            const video = selectOne(".video").value;
 
             const data = {
               title,
               description,
+              video,
             };
             updateData(data, "/api/v1/admin", "about", "/admin/about");
           });
@@ -810,6 +846,13 @@ export default () => {
   if (logoutBtn) {
     logoutBtn.addEventListener("click", () => {
       logout();
+    });
+  }
+
+  if (playVideoBtn) {
+    playVideoBtn.addEventListener("click", () => {
+      let videoUrl = playVideoBtn.getAttribute("data-video");
+      console.log(videoUrl);
     });
   }
 };

@@ -16,6 +16,10 @@ const errorHandler = (err, req, res, next) => {
     res.redirect("/admin/login");
   }
 
+  if (err.name === "JsonWebTokenError") {
+    res.redirect("/admin/login");
+  }
+
   res.status(error.statusCode || 500).json({
     success: false,
     error: error.message || "Server error!",
