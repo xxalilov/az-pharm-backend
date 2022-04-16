@@ -2,6 +2,7 @@ const About = require("../models/About");
 const asyncHandler = require("../middleware/async");
 const ErrorResponse = require("../utils/errorResponse");
 const { aboutSchema } = require("../utils/validator");
+const { deleteFile } = require("../utils/file");
 
 /**
  * @desc    GET About for admin
@@ -42,6 +43,14 @@ exports.getAboutJson = asyncHandler(async (req, res, next) => {
  * @access  Private
  */
 exports.createAbout = asyncHandler(async (req, res, next) => {
+  const file = req.file;
+
+  if (!file) {
+    req.body.image = undefined;
+  } else {
+    req.body.image = file.path;
+  }
+
   const { error } = await aboutSchema.validate(req.body);
 
   if (error) {
@@ -70,10 +79,18 @@ exports.createAbout = asyncHandler(async (req, res, next) => {
  * @access  Private
  */
 exports.updateAbout = asyncHandler(async (req, res, next) => {
+  const file = req.file;
   let about = await About.findOne();
 
   if (!about) {
     return next(new ErrorResponse("About not found", 404));
+  }
+
+  if (!file) {
+    req.body.image = about.image;
+  } else {
+    req.body.image = file.path;
+    deleteFile(about.image);
   }
 
   const { error } = await aboutSchema.validate(req.body);
@@ -82,10 +99,11 @@ exports.updateAbout = asyncHandler(async (req, res, next) => {
     return next(new ErrorResponse(error, 400));
   }
 
-  let video = req.body.video;
-  let url = video.slice(17);
-
-  req.body.video = `https://youtube.com/embed/${url}`;
+  if (req.body.video.slice(17) === "https://youtu.be/") {
+    let video = req.body.video;
+    let url = video.slice(17);
+    req.body.video = `https://youtube.com/embed/${url}`;
+  }
 
   about = await About.findByIdAndUpdate(about._id, req.body, {
     new: true,

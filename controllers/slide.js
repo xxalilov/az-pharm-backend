@@ -45,8 +45,6 @@ exports.getSlide = asyncHandler(async (req, res, next) => {
 exports.createSlide = asyncHandler(async (req, res, next) => {
   const file = req.file;
 
-  console.log(file);
-
   if (!file) {
     req.body.image = undefined;
   } else {

@@ -652,6 +652,18 @@ export default () => {
         required
       />
     </div>
+    <div class="form-group">
+    <label for="recipient-name" class="col-form-label"
+      >Video poster</label
+    >
+    <input
+      type="file"
+      class="form-control video-poster"
+      id="recipient-name"
+      style="color: black"
+      required
+    />
+  </div>
     <div class="modal-footer">
     <button class="btn btn-primary">Add</button>
   </div>
@@ -667,13 +679,16 @@ export default () => {
           const title = selectOne(".title").value;
           const description = selectOne(".description").value;
           const video = selectOne(".video").value;
+          const image = selectOne(".video-poster").files[0];
 
-          const data = {
-            title,
-            description,
-            video,
-          };
-          postData(data, "/api/v1/admin/about", "/admin/about");
+          const form = new FormData();
+
+          form.append("title", title);
+          form.append("description", description);
+          form.append("video", video);
+          form.append("image", image);
+
+          postFormData(form, "/api/v1/admin/about", "/admin/about");
         });
       }
     });
@@ -723,6 +738,17 @@ export default () => {
         required
       />
     </div>
+    <div class="form-group">
+    <label for="recipient-name" class="col-form-label"
+      >Video poster</label
+    >
+    <input
+      type="file"
+      class="form-control video-poster"
+      id="recipient-name"
+      style="color: black"
+    />
+  </div>
         <div class="modal-footer">
         <button class="btn btn-primary">Add</button>
       </div>
@@ -737,13 +763,16 @@ export default () => {
             const title = selectOne(".title").value;
             const description = selectOne(".description").value;
             const video = selectOne(".video").value;
+            const image = selectOne(".video-poster").files[0];
 
-            const data = {
-              title,
-              description,
-              video,
-            };
-            updateData(data, "/api/v1/admin", "about", "/admin/about");
+            const form = new FormData();
+
+            form.append("title", title);
+            form.append("description", description);
+            form.append("video", video);
+            form.append("image", image);
+
+            updateFormData(form, "/api/v1/admin", "about", "/admin/about");
           });
         });
       });

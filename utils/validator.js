@@ -18,4 +18,5 @@ exports.aboutSchema = Joi.object({
   title: Joi.string().min(3).required(),
   description: Joi.string().min(5).required(),
   video: Joi.string().required(),
+  image: Joi.string().required(),
 });
